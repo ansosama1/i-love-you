@@ -201,6 +201,76 @@
   <!-- Title -->
   <h1>Our Memories 🎀</h1>
 
+    <!-- Background Music --> 
+  <!-- Spotify-like Horizontal Music Card with Time Counters -->
+<div class="music-card" style="background:#ff9a9e; max-width:500px; margin:20px auto; border-radius:15px; box-shadow:0 6px 20px rgba(0,0,0,0.25); display:flex; align-items:center; padding:15px; font-family:Tajawal, sans-serif;">
+
+  <!-- Cover Image -->
+  <img src="./image.webp" alt="غلاف الأغنية" style="width:80px; height:80px; object-fit:cover; border-radius:10px; flex-shrink:0; margin-left: 40px;">
+
+  <!-- Info & Controls -->
+  <div style="margin-left:15px; flex:1;">
+
+    <!-- Song Info -->
+    <h4 style="color:white; margin:0 0 5px 0;">Mosh Gedid</h4>
+    <p style="color:#ffe6f0; margin:0 0 10px 0;">Amr Diab</p>
+
+    <!-- Audio Player -->
+    <audio id="bgMusic" loop>
+      <source src="./Mosh Gedid.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+
+    <!-- Progress Bar with Time -->
+    <div style="display:flex; align-items:center; gap:10px; margin-top:5px;">
+      <span id="currentTime" style="color:white; font-size:14px;">0:00</span>
+      <input type="range" id="progressBar" value="0" style="flex:1; cursor:pointer;">
+      <span id="durationTime" style="color:white; font-size:14px;">0:00</span>
+    </div>
+
+    <!-- Controls -->
+    <div style="margin-top:10px;">
+      <button onclick="playMusic()" style="background:#d63384; color:white; border:none; padding:7px 15px; border-radius:30px; margin-right:10px; cursor:pointer;">تشغيل</button>
+      <button onclick="pauseMusic()" style="background:#b12a6f; color:white; border:none; padding:7px 15px; border-radius:30px; cursor:pointer;">إيقاف</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const music = document.getElementById('bgMusic');
+const progressBar = document.getElementById('progressBar');
+const currentTimeEl = document.getElementById('currentTime');
+const durationTimeEl = document.getElementById('durationTime');
+
+// Play/Pause functions
+function playMusic() { music.play(); }
+function pauseMusic() { music.pause(); }
+
+// Format seconds to mm:ss
+function formatTime(sec) {
+  const minutes = Math.floor(sec / 60);
+  const seconds = Math.floor(sec % 60);
+  return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+}
+
+// Set duration when metadata loaded
+music.addEventListener('loadedmetadata', () => {
+  durationTimeEl.textContent = formatTime(music.duration);
+});
+
+// Update progress and current time
+music.addEventListener('timeupdate', () => {
+  const progress = (music.currentTime / music.duration) * 100;
+  progressBar.value = progress || 0;
+  currentTimeEl.textContent = formatTime(music.currentTime);
+});
+
+// Seek functionality
+progressBar.addEventListener('input', () => {
+  music.currentTime = (progressBar.value / 100) * music.duration;
+});
+</script>
+
   <div class="d-flex justify-content-center align-items-center">
     <h2 class="text-center">مش هينفع ارفع صور هنا عشاب عيب 👀🙃و لسه لما نتصور مع بعض ان شاء الله</h2>
   </div>
@@ -264,4 +334,5 @@
     });
   </script>
 </body>
+
 </html>
